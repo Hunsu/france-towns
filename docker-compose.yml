@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:12-alpine
+    ports:
+      - "5432:5432"
+    env_file:
+      - dev.env
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      - ./database/01-db-init.sql:/docker-entrypoint-initdb.d/01-db-init.sql
