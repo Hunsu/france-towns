@@ -1,10 +1,25 @@
 services:
   db:
     image: postgres:12-alpine
+    container_name: towns-db
     ports:
       - "5432:5432"
     env_file:
-      - dev.env
+      - .env.production
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
       - ./database/01-db-init.sql:/docker-entrypoint-initdb.d/01-db-init.sql
+    healthcheck:
+      test: "pg_isready --username=postgres && psql --username=postgres --list"
+      timeout: 10s
+      retries: 20
+  app:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - .env.production
+    depends_on:
+      db:
+        condition: service_healthy
