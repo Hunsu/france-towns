@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Results.module.css"
 import {Town} from "@/common/types";
+import {getDataProps} from "@/front/helpers/props";
 
 type TitleProps = {
     title: string
@@ -33,13 +34,13 @@ const SearchText: React.FC<SearchTextProps> = ({nbResults}) => {
     } else {
         text = `${nbResults} villes correspondant au texte saisi`
     }
-    return <div className={`${className} ${styles.searchText}`}>{text}</div>
+    return <div className={`${className} ${styles.searchText}`}><label>{text}</label></div>
 }
 
 const TownComponent: React.FC<Town> = ({name, postalCode}) => {
     return <div className={styles.town}>
-        <span className={styles.townName}>{name}</span>
-        <span className={styles.townPostalCode}>{postalCode}</span>
+        <span data-cy= "town-name" className={styles.townName}>{name}</span>
+        <span data-cy="town-postalCode" className={styles.townPostalCode}>{postalCode}</span>
     </div>
 }
 
@@ -56,8 +57,8 @@ const TownsList: React.FC<TownsListProps> = ({towns}) => {
 }
 
 
-const Results: React.FC<ResultsProps> = ({title, towns}) => {
-    return <div className={styles.wrapper}>
+const Results: React.FC<ResultsProps> = ({title, towns, ...props}) => {
+    return <div className={styles.wrapper} {...getDataProps(props as { [x: string]: string })}>
         <Title title={title}/>
         <SearchText nbResults={towns.length}/>
         <TownsList towns={towns} />

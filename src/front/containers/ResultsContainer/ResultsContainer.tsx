@@ -19,8 +19,8 @@ const ResultsContainer: React.FC<ResultsContainerProps> = ({towns}) => {
     })
 
     return <div className={styles.container}>
-        <Results title="Villes de métropole" towns={metropolitanCities}/>
-        <Results title="Villes d'outre-mer" towns={overseasCities}/>
+        <Results data-cy="metropolitanCities" title="Villes de métropole" towns={metropolitanCities}/>
+        <Results data-cy="overSeasCities" title="Villes d'outre-mer" towns={overseasCities}/>
     </div>
 }
 
