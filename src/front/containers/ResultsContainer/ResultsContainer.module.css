@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    min-height: 700px;
+    width: 100%;
+    gap: 30px;
+}
+
+.results {
+    flex: 0 0 100%;
+}

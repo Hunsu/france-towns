@@ -1,0 +1,11 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+    margin-right: 20%;
+    margin-left: 20%;
+    min-height: 700px;
+    padding: 30px;
+    gap: 30px
+}
