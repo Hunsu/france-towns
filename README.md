@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) app that allow searching for French towns. You can search by name or postal
+code.
 
 ## Getting Started
 
-First, run the development server:
+First create twos files `.env.developement` and `.env.production` which contains environment variables to connect to the
+database.
+
+```
+POSTGRES_PASSWORD=mysecretpassword
+POSTGRES_DB=towns
+DB_NAME=towns
+DB_PASSWORD=mysecretpassword
+DB_USER=postgres
+DB_HOST=localhost
+DB_PORT=5432
+```
+
+Then start the database service:
+
+````bash
+docker-compose build db
+docker-compose start db
+````
+
+And finally start the app
 
 ```bash
-npm run dev
-# or
+yarn build-db # populate the database, may take some time the first time
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at [http:localhost:3000]()
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Production
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+There is a docker-compose that will allow to start the app with the required services (database). First you should create file named `.env.production` that will
+contains:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+POSTGRES_PASSWORD=mysecretpassword
+POSTGRES_DB=towns
+DB_NAME=towns
+DB_PASSWORD=mysecretpassword
+DB_USER=postgres
+DB_PORT=5432
+```
 
-## Learn More
+Note that you could change the values of those environment variables.
+To start the app run
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+docker-compose build
+docker-compose up -d
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The app will be available at [http:localhost:3000]()
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+# Improvements
+This is a list of things that could be improved
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Speedup the populating of the database. We could use bulk insert instead of inserting one town at time. pg-promise allow to do that
+- Add responsive design
+- Add unit tests
